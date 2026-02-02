@@ -16,14 +16,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // receive message from client
         // /app is not a real endpoint. It exists to help differentiate
         // between inbound and outbound traffic
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.setApplicationDestinationPrefixes("/receive-answer");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         // clients connect here
-        registry.addEndpoint("/ws")
+        // this is where the 3 -way handshake takes place
+        registry.addEndpoint("/ws-connect")
                 .setAllowedOriginPatterns("*");
     }
 }
