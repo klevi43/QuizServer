@@ -14,8 +14,8 @@ public class QuizController {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @MessageMapping("/receive-answer")
-    @SendTo("/quiz/answer")
+    @MessageMapping("/receive-answer") // Frontend calls here
+    @SendTo("/quiz/answer") // Server sends event here
     public String echo(@Header("simpSessionId") String sessionId) {
         return "Testaldkfja";
         //template.convertAndSendToUser(sessionId, "/answer", "test");
