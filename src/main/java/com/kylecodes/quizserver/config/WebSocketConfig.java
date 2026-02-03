@@ -16,7 +16,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // receive message from client
         // /app is not a real endpoint. It exists to help differentiate
         // between inbound and outbound traffic
-        registry.setApplicationDestinationPrefixes("/receive-answer");
+        registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
