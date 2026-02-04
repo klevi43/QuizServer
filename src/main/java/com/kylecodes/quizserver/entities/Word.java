@@ -1,4 +1,4 @@
-package com.kylecodes.quizserver;
+package com.kylecodes.quizserver.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
