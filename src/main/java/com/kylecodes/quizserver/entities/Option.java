@@ -1,13 +1,12 @@
 package com.kylecodes.quizserver.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Word {
+@Table(name = "options")
+public class Option {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -15,12 +14,18 @@ public class Word {
     @NotNull
     private String content;
 
-    public Word() {
+    @ManyToOne
+    @JoinColumn
+    @NotNull
+    private Question question;
+
+    public Option() {
     }
 
-    public Word(Integer id, String content) {
+    public Option(Integer id, String content, Question question) {
         this.id = id;
         this.content = content;
+        this.question = question;
     }
 
     public Integer getId() {
@@ -37,5 +42,13 @@ public class Word {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 }
