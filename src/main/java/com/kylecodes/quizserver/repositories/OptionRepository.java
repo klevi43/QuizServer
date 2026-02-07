@@ -1,13 +1,13 @@
 package com.kylecodes.quizserver.repositories;
 
-
+import com.kylecodes.quizserver.entities.Option;
 import com.kylecodes.quizserver.entities.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    Optional<Question> findQuestionById(Question question);
+public interface OptionRepository extends JpaRepository<Option, Integer> {
+    List<Option> findAllByQuestion(Question question);
 }
