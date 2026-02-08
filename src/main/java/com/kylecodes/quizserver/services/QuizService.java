@@ -17,9 +17,11 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public Quiz getQuizById(Integer id) {
+    public Quiz getQuizById(Integer id) throws Exception {
         Optional<Quiz> quiz = quizRepository.findQuizById(id);
-        Quiz res = quiz.get();
-        return res;
+        if (quiz.isEmpty()) {
+            throw new Exception("Quiz not found");
+        }
+        return quiz.get();
     }
 }
