@@ -13,7 +13,6 @@ public class Quiz {
     private Integer id;
 
     @OneToMany(mappedBy = "quiz", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JsonIgnore
     private List<Question> questionList;
 
     public Quiz() {

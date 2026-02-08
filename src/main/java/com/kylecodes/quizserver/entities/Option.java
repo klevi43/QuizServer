@@ -1,5 +1,6 @@
 package com.kylecodes.quizserver.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ public class Option {
     @ManyToOne
     @JoinColumn
     @NotNull
+    @JsonIgnore
     private Question question;
 
     public Option() {

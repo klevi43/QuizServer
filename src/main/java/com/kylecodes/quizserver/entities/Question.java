@@ -18,10 +18,10 @@ public class Question {
     @ManyToOne()
     @JoinColumn
     @NotNull
+    @JsonIgnore
     private Quiz quiz;
 
     @OneToMany(orphanRemoval = true, mappedBy = "question", cascade = {CascadeType.ALL})
-    @JsonIgnore
     private List<Option> options;
 
 

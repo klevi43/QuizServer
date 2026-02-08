@@ -1,4 +1,4 @@
-package com.kylecodes.quizserver.controllers;
+package com.kylecodes.quizserver.controllers.eventControllers;
 
 import com.kylecodes.quizserver.entities.Question;
 import com.kylecodes.quizserver.entities.Quiz;
@@ -10,20 +10,19 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @Controller
-public class QuizController {
+public class QuizSocketController {
     private final QuestionService questionService;
 
 
     private final SimpMessagingTemplate template;
     private final SimpUserRegistry simpUserRegistry;
     private QuizService quizService;
-    public QuizController(QuizService quizService, QuestionService questionService, SimpMessagingTemplate template, SimpUserRegistry simpUserRegistry) {
+    public QuizSocketController(QuizService quizService, QuestionService questionService, SimpMessagingTemplate template, SimpUserRegistry simpUserRegistry) {
         this.quizService = quizService;
         this.questionService = questionService;
         this.template = template;

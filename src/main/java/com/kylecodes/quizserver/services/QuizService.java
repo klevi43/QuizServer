@@ -20,7 +20,6 @@ public class QuizService {
     public Quiz getQuizById(Integer id) {
         Optional<Quiz> quiz = quizRepository.findQuizById(id);
         Quiz res = quiz.get();
-        System.out.println(res.getQuestionList());
         return res;
     }
 }
