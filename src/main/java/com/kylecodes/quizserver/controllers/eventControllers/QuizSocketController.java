@@ -31,7 +31,7 @@ public class QuizSocketController {
 
     @MessageMapping("/send-quiz")
     @SendTo("/quiz/get-quiz")
-    public Quiz getQuiz(@RequestBody Integer quizId) {
+    public Quiz getQuiz(@RequestBody Integer quizId) throws Exception {
         System.out.println(quizId);
         return quizService.getQuizById(quizId);
     }
