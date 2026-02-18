@@ -12,7 +12,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // send message to client
-        registry.enableSimpleBroker("/quiz");
+        registry.enableSimpleBroker("/quiz", "/queue");
+        registry.setUserDestinationPrefix("/user");
         // receive message from client
         // /app is not a real endpoint. It exists to help differentiate
         // between inbound and outbound traffic

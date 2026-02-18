@@ -1,13 +1,16 @@
 package com.kylecodes.quizserver.controllers.eventControllers;
 
+import com.kylecodes.quizserver.dtos.AnswerDto;
 import com.kylecodes.quizserver.entities.Question;
 import com.kylecodes.quizserver.entities.Quiz;
 import com.kylecodes.quizserver.services.QuestionService;
 import com.kylecodes.quizserver.services.QuizService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,16 +32,17 @@ public class QuizSocketController {
         this.simpUserRegistry = simpUserRegistry;
     }
 
-    @MessageMapping("/send-quiz")
-    @SendTo("/quiz/get-quiz")
-    public Quiz getQuiz(@RequestBody Integer quizId) throws Exception {
-        System.out.println(quizId);
-        return quizService.getQuizById(quizId);
+    @MessageMapping("/receive-answer")
+    @SendToUser("/user/queue/answer-result")
+    public void getQuiz(@Payload AnswerDto answerDto) throws Exception {
+
+        System.out.println("Message from: " + answerDto.getFrom());
+        template.convertAndSend("/queue/answer-result/" + answerDto.getFrom(), answerDto);
     }
-    @MessageMapping("/receive-answer") // Frontend calls here
-    @SendTo("/quiz/answer") // Server sends event here
-    public List<Question> echo(@Header("simpSessionId") String sessionId) {
-        return questionService.getAll();
-        //template.convertAndSendToUser(sessionId, "/answer", "test");
-    }
+//    @MessageMapping("/receive-answer") // Frontend calls here
+//    @SendTo("/quiz/answer") // Server sends event here
+//    public List<Question> echo(@Header("simpSessionId") String sessionId) {
+//        return questionService.getAll();
+//        //template.convertAndSendToUser(sessionId, "/answer", "test");
+//    }
 }
