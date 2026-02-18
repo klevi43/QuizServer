@@ -5,6 +5,7 @@ import com.kylecodes.quizserver.entities.Question;
 import com.kylecodes.quizserver.entities.Quiz;
 import com.kylecodes.quizserver.services.QuestionService;
 import com.kylecodes.quizserver.services.QuizService;
+import org.springframework.boot.jackson.autoconfigure.JacksonProperties;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class QuizSocketController {
@@ -33,11 +35,15 @@ public class QuizSocketController {
     }
 
     @MessageMapping("/receive-answer")
-    @SendToUser("/user/queue/answer-result")
-    public void getQuiz(@Payload AnswerDto answerDto) throws Exception {
+    public void validateAnswer(@Payload AnswerDto answerDto) throws Exception {
 
         System.out.println("Message from: " + answerDto.getFrom());
-        template.convertAndSend("/queue/answer-result/" + answerDto.getFrom(), answerDto);
+        Optional<Question> question = questionService.getById(answerDto.getQuestionId());
+        if (question.isEmpty()) {
+            throw new Exception("Question not found");
+        }
+
+        template.convertAndSend("/queue/answer-result/" + answerDto.getFrom(), answerDto.getOptionId().equals(question.get().getCorrectOptionId()));
     }
 //    @MessageMapping("/receive-answer") // Frontend calls here
 //    @SendTo("/quiz/answer") // Server sends event here
